@@ -88,8 +88,18 @@ static int getRandomNumber(uint64_t *p_vli)
     
     return 1;
 }
+#elif (defined(__XC32))
+/* PIC32 (XC32) */
 
-#else /* _WIN32 */
+static int getRandomNumber(uint64_t *p_vli)
+{
+
+    SYS_RANDOM_CryptoBlockGet( (void *)p_vli, ECC_BYTES );
+
+    return(1);
+}
+
+#else /* Linux */
 
 /* Assume that we are using a POSIX-like system with /dev/urandom or /dev/random. */
 #include <sys/types.h>
